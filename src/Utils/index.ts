@@ -10,12 +10,15 @@ import moment from 'moment';
  * }
  * @returns
  * {
- *  value1: 'wangwu',
+ *  value1: 'wang wu',
  *  age: '12'
  * }
  */
-export const trimObj = (object) => {
-  const newObj = {};
+interface objectProp {
+  [key: string]: string | number | undefined | null | void;
+}
+export const trimObj = (object: objectProp) => {
+  const newObj: objectProp = {};
   for (let item in object) {
     if (item) {
       newObj[item] = trim(object[item]);
@@ -29,7 +32,7 @@ export const trimObj = (object) => {
  * @param num 8
  * @returns 八
  */
-export const convertNumToUppercase = (num) => {
+export const convertNumToUppercase = (num: number) => {
   // eslint-disable-next-line no-param-reassign
   num = Number(num);
   let upperCaseNumber = [
@@ -64,7 +67,10 @@ export const convertNumToUppercase = (num) => {
  * @param format 格式化类型
  * @returns
  */
-export const formateTimeStamp = (value, format = 'YYYY-MM-DD HH:mm:ss') => {
+export const formateTimeStamp = (
+  value: Date,
+  format: string = 'YYYY-MM-DD HH:mm:ss',
+) => {
   if (!value) return;
   return moment(value)?.format(format);
 };
