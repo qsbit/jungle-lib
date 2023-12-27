@@ -75,10 +75,43 @@ export const formateTimeStamp = (
   return moment(value)?.format(format);
 };
 
+/**
+ * 递归当前节点获取所有父节点的key，直到顶部
+ * @param {*} treeData treeData
+ * @param {*} currentId 当前节点的id
+ * @param {*} valueKey 需要获取的父节点的key
+ * @returns
+ */
+export const getParentKeys = (
+  treeData: Array<any>,
+  currentId: string,
+  valueKey = 'label',
+) => {
+  // 结果数组
+  const parentKeyList: Array<any> = [];
+  const loopFn = (arr: Array<any>, id: string) => {
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
+      if (item?.id === id) {
+        loopFn(treeData, item?.parentId);
+        parentKeyList?.push(item[valueKey]);
+        break;
+      } else {
+        if (item?.children) {
+          loopFn(item?.children, id);
+        }
+      }
+    }
+  };
+  loopFn(treeData, currentId);
+  return parentKeyList;
+};
+
 const Utils = {
   trimObj,
   convertNumToUppercase,
   formateTimeStamp,
+  getParentKeys,
 };
 
 export default Utils;
