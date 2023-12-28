@@ -81,12 +81,8 @@ export const formateTimeStamp = (
  * @param {*} currentId 当前节点的id
  * @param {*} valueKey 需要获取的父节点的key
  * @returns
- */
-export const getParentKeys = (
-  treeData: Array<any>,
-  currentId: string,
-  valueKey = 'label',
-) => {
+*/
+export const getParentKeys = (treeData: Array<any>, currentId: string, valueKey = 'label') => {
   // 结果数组
   const parentKeyList: Array<any> = [];
   const loopFn = (arr: Array<any>, id: string) => {
@@ -107,11 +103,33 @@ export const getParentKeys = (
   return parentKeyList;
 };
 
+// 通过id查找整棵树下边的子节点
+export const findChildrenKey = (treeList: Array<any>, id: any, valueKey = 'label') => {
+  const temp: Array<any> = [];
+  const loopFn = (treeList: Array<any>, id: any) => {
+    for (let i = 0; i < treeList?.length; i++) {
+      const item = treeList[i];
+      if (item?.parentId === id) {
+        temp.push(item[valueKey]);
+        loopFn(treeList, item.id);
+      } else {
+        if (item?.children) {
+          loopFn(item?.children, id);
+        }
+      }
+    }
+  };
+  loopFn(treeList, id);
+  return temp;
+};
+
+
 const Utils = {
   trimObj,
   convertNumToUppercase,
   formateTimeStamp,
   getParentKeys,
+  findChildrenKey,
 };
 
 export default Utils;

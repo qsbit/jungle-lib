@@ -20,5 +20,9 @@ description="将时间戳转化为指定的格式。">
 时间戳格式化</code>
 
 <code src="./demos/GetParentKeysDemo.jsx"
-description="获取当前节点的根节点。">
+description="获取当前节点的所有父节点。">
 获取当前节点的所有父节点</code>
+
+<code src="./demos/FindChildrenKeyDemo.jsx"
+description="获取当前节点的所有子节点。">
+获取当前节点的所有子节点</code>
